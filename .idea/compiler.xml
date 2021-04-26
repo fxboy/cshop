@@ -8,12 +8,16 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Eureka-9901" />
+        <module name="OAuth-9902" />
+        <module name="Common" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Common" options="-parameters" />
       <module name="Eureka-9901" options="-parameters" />
+      <module name="OAuth-9902" options="-parameters" />
       <module name="cshop" options="-parameters" />
     </option>
   </component>

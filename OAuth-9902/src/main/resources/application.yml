@@ -1,0 +1,32 @@
+server:
+  port: 80
+#服务名称
+spring:
+  application:
+    name: oauth
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    name: defaultDataSource
+    url: jdbc:mysql://localhost:3306/wxshop?serverTimezone=UTC&allowMultiQueries=true
+    username: root
+    password: 123456
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    timeout: 1000
+mybatis:
+  mapper-locations: classpath:mapper/*xml
+  configuration:
+    map-underscore-to-camel-case: true
+eureka:
+  instance:
+    hostname: localhost  # 注册中心路径
+    port: 9901
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka
+qq:
+ clientId: 101920186
+ clientSecret: 26be4e50a86112a59d9d870c38fe8cb1
+ redirectUri: http://www.fanxing.live/login/qq
