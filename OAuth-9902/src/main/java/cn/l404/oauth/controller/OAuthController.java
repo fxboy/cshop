@@ -1,6 +1,7 @@
 package cn.l404.oauth.controller;
 
 import cn.l404.oauth.service.OAuthService;
+import cn.l404.oauth.util.RequstUtils;
 import com.alibaba.fastjson.JSON;
 import me.zhyd.oauth.model.AuthCallback;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class OAuthController {
   @Qualifier("oauthservice")
   @Autowired
   OAuthService oAuthService;
+  @Autowired
+  RequstUtils requstUtils;
 
   @RequestMapping("/render")
   public void renderAuth(HttpServletResponse response) throws IOException {
@@ -33,8 +36,8 @@ public class OAuthController {
   }
 
   @RequestMapping("/verification")
-  public String verification(String access_token,String role) {
-    return JSON.toJSONString(oAuthService.verification(access_token, role));
+  public String verification(String role) {
+    return JSON.toJSONString(oAuthService.verification(requstUtils.getToken(), role));
   }
 
   @RequestMapping("/login")
@@ -43,7 +46,7 @@ public class OAuthController {
   }
 
   @RequestMapping("/getinfo")
-  public String getinfo(String access_token){
-    return JSON.toJSONString(oAuthService.getinfo(access_token));
+  public String getinfo(){
+    return JSON.toJSONString(oAuthService.getinfo(requstUtils.getToken()));
   }
 }

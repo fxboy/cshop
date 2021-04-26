@@ -51,14 +51,14 @@ public class JWTUtils {
     public static ResultVO getTokenInfo(String token){
         if(check(token)) {
             Claims claims = getClaimsFromToken(token);
-            return new ResultVO(5000,"ok",claims.get("info"));
+            return new ResultVO(2000,"ok",claims.get("info"));
         }
         return new ResultVO(401,"Not logged in",false);
     }
 
 
     // 解析本系统的token
-    public static ResultVO Vercheck(String token,String role){
+    public static ResultVO<Boolean> Vercheck(String token,String role){
         // 开始解析出token包含的信息，解析出所携带的权限
         //这里是从token解析出的权限
         if(check(token)) {

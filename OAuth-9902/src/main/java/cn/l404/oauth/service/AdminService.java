@@ -1,6 +1,7 @@
 package cn.l404.oauth.service;
 
 import cn.l404.common.pojo.ResultVO;
+import cn.l404.oauth.entity.SysMenu;
 import cn.l404.oauth.entity.SysRole;
 import cn.l404.oauth.entity.SysUser;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,9 @@ public interface AdminService {
     // 添加新的权限 （需要id为1的权限）
     ResultVO addNewRole(String access_token, SysRole sysRole);
 
-    // 添加新菜单
-    //ResultVO addNewMenu(String access_token,)
+    // 添加新菜单 (需要id为1的权限)
+    ResultVO addNewMenu(String access_token, SysMenu sysMenu);
+
+
+
 }

@@ -51,6 +51,10 @@ public class OAuthServiceImpl implements OAuthService {
             QQLoginBean qqbean = JSONObject.parseObject(JSON.toJSONString(authResponse.getData()), QQLoginBean.class);
            // System.out.println(qqbean.getToken().getOpenId());
             String access_token = JWTUtils.create(qqbean.getToken(),qqbean.getRawUserInfo(),"qq");
+            qqbean.getRawUserInfo().setAvatar(qqbean.getAvatar());
+            qqbean.getRawUserInfo().setUsername(qqbean.getUsername());
+            qqbean.getRawUserInfo().setLocation(qqbean.getLocation());
+            qqbean.getRawUserInfo().setSource(qqbean.getSource());
             Map map = new ConcurrentHashMap();
             map.put("access_token",access_token);
             map.put("userinfo",qqbean.getRawUserInfo());

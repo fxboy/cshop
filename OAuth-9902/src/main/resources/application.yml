@@ -27,6 +27,11 @@ eureka:
     service-url:
       defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka
 qq:
- clientId: 101920186
- clientSecret: 26be4e50a86112a59d9d870c38fe8cb1
- redirectUri: http://www.fanxing.live/login/qq
+  clientId: 101920186
+  clientSecret: 26be4e50a86112a59d9d870c38fe8cb1
+  redirectUri: http://www.fanxing.live/login/qq
+roles:
+  name: admin
+token:
+  name: access_token
+

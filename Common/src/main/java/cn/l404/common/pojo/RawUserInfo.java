@@ -11,6 +11,11 @@ package cn.l404.common.pojo;
  */
 public class RawUserInfo {
 
+    private String avatar;
+    private String location;
+    private String source;
+    private String username;
+
     private int ret;
     private String msg;
     private int is_lost;
@@ -33,6 +38,40 @@ public class RawUserInfo {
     private String figureurl_qq_1;
     private String vip;
     private String figureurl_qq_2;
+
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public void setRet(int ret) {
         this.ret = ret;
     }
