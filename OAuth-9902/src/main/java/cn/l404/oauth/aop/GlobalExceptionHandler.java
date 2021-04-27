@@ -23,6 +23,7 @@ public class GlobalExceptionHandler {
     public ResultVO doError(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                             Exception ex) {
         System.out.println("异常处理中心："+ex.getMessage());
+        //ex.printStackTrace();
         return new ResultVO(5000,ex.getMessage());
     }
 }

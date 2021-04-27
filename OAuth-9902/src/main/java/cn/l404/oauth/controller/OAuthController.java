@@ -1,5 +1,6 @@
 package cn.l404.oauth.controller;
 
+import cn.l404.oauth.annotation.Renewal;
 import cn.l404.oauth.service.OAuthService;
 import cn.l404.oauth.util.RequstUtils;
 import com.alibaba.fastjson.JSON;
@@ -35,6 +36,7 @@ public class OAuthController {
     return JSON.toJSONString(oAuthService.getInfo(callback));
   }
 
+  @Renewal
   @RequestMapping("/verification")
   public String verification(String role) {
     return JSON.toJSONString(oAuthService.verification(requstUtils.getToken(), role));

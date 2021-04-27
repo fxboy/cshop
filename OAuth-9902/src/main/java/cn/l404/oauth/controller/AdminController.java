@@ -1,6 +1,7 @@
 package cn.l404.oauth.controller;
 
 import cn.l404.common.pojo.ResultVO;
+import cn.l404.oauth.annotation.Renewal;
 import cn.l404.oauth.entity.SysMenu;
 import cn.l404.oauth.entity.SysRm;
 import cn.l404.oauth.entity.SysRole;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @auther Fanxing
  * 管理员操作
  */
+@Renewal
 @RestController
 @RequestMapping("/admin")
 public class AdminController {

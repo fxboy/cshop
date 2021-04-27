@@ -38,10 +38,13 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     SysRmDao sysRmDao;
 
+    @Autowired
+    JWTUtils jwtUtils;
+
     @Override
     public ResultVO addNewUser(String access_token, SysUser sysUser) {
         // 校验权限
-        ResultVO<Boolean> result = JWTUtils.Vercheck(access_token,adminRole);
+        ResultVO<Boolean> result = jwtUtils.Vercheck(access_token,adminRole);
         if(!result.getData()){
             // 权限校验未通过
             return result;
@@ -57,7 +60,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public ResultVO getRoleList(String access_token) {
-        ResultVO<Boolean> result = JWTUtils.Vercheck(access_token,adminRole);
+        ResultVO<Boolean> result = jwtUtils.Vercheck(access_token,adminRole);
         if(!result.getData()){
             // 权限校验未通过
             return result;
@@ -78,7 +81,7 @@ public class AdminServiceImpl implements AdminService {
     public ResultVO updateUserPassword(String access_token, Integer uid, String oldpassWord, String newPassword) {
         oldpassWord = PasswordUtils.encypt(oldpassWord);
         newPassword = PasswordUtils.encypt(newPassword);
-        ResultVO<Boolean> result = JWTUtils.Vercheck(access_token,adminRole);
+        ResultVO<Boolean> result = jwtUtils.Vercheck(access_token,adminRole);
         if(!result.getData()){
             // 权限校验未通过
             return result;
@@ -101,7 +104,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public ResultVO addNewRole(String access_token, SysRole sysRole) throws Exception {
-        ResultVO<Boolean> result = JWTUtils.Vercheck(access_token,adminRole);
+        ResultVO<Boolean> result = jwtUtils.Vercheck(access_token,adminRole);
         if(!result.getData()){
             // 权限校验未通过
             return result;
@@ -118,7 +121,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public ResultVO addNewMenu(String access_token, SysMenu sysMenu) throws Exception {
         // 校验权限
-        ResultVO<Boolean> result = JWTUtils.Vercheck(access_token,adminRole);
+        ResultVO<Boolean> result = jwtUtils.Vercheck(access_token,adminRole);
         if(!result.getData()){
             // 权限校验未通过
             return result;
@@ -136,7 +139,7 @@ public class AdminServiceImpl implements AdminService {
     // 修改用户的信息
     @Override
     public ResultVO updateUserInfo(String access_token, SysUser sysUser) throws Exception {
-        ResultVO<Boolean> result = JWTUtils.Vercheck(access_token,adminRole);
+        ResultVO<Boolean> result = jwtUtils.Vercheck(access_token,adminRole);
         if(!result.getData()){
             // 权限校验未通过
             return result;
@@ -150,12 +153,12 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public ResultVO updateMyInfo(String access_token, SysUser sysUser) throws Exception {
-        ResultVO<Boolean> result = JWTUtils.Vercheck(access_token,"qq");
+        ResultVO<Boolean> result = jwtUtils.Vercheck(access_token,"qq");
         if(result.getData()){
             // 权限校验通过即是qq权限，而qq权限并没有执行权限，所以抛出权限异常
             throw new Exception("权限敏感操作，后台拒绝执行");
         }
-        ResultVO<Claims> res = JWTUtils.getTokenInfo(access_token);
+        ResultVO<Claims> res = jwtUtils.getTokenInfo(access_token);
         if (res.getCode() != 2000){
             throw new Exception("access_token失效，请重新登录");
         }
@@ -170,7 +173,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public ResultVO roleAddNewMenu(String access_token, SysRm sysRm) throws Exception {
-        ResultVO<Boolean> result = JWTUtils.Vercheck(access_token,adminRole);
+        ResultVO<Boolean> result = jwtUtils.Vercheck(access_token,adminRole);
         if(!result.getData()){
             // 权限校验通过即是qq权限，而qq权限并没有执行权限，所以抛出权限异常
             throw new Exception("权限敏感操作，后台拒绝执行");
@@ -185,7 +188,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public ResultVO updateRoleInfo(String access_token,SysRole sysRole) throws Exception {
-        ResultVO<Boolean> result = JWTUtils.Vercheck(access_token,adminRole);
+        ResultVO<Boolean> result = jwtUtils.Vercheck(access_token,adminRole);
         if(result.getData()){
             // 权限校验通过即是qq权限，而qq权限并没有执行权限，所以抛出权限异常
             throw new Exception("权限敏感操作，后台拒绝执行");
@@ -199,7 +202,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public ResultVO updateMenuInfo(String access_token, SysMenu sysMenu) throws Exception {
-        ResultVO<Boolean> result = JWTUtils.Vercheck(access_token,adminRole);
+        ResultVO<Boolean> result = jwtUtils.Vercheck(access_token,adminRole);
         if(result.getData()){
             // 权限校验通过即是qq权限，而qq权限并没有执行权限，所以抛出权限异常
             throw new Exception("权限敏感操作，后台拒绝执行");
@@ -213,7 +216,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public ResultVO deleteRmInfo(String access_token, SysRm sysRm) throws Exception {
-        ResultVO<Boolean> result = JWTUtils.Vercheck(access_token,adminRole);
+        ResultVO<Boolean> result = jwtUtils.Vercheck(access_token,adminRole);
         if(result.getData()){
             // 权限校验通过即是qq权限，而qq权限并没有执行权限，所以抛出权限异常
             throw new Exception("权限敏感操作，后台拒绝执行");

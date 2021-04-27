@@ -13,4 +13,6 @@ public class PasswordUtils {
     public static String encypt(String textBase){
         return textBase;
     }
+
+    public static String md5encypt(String textBase){ return textBase;}
 }
