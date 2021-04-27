@@ -1,6 +1,8 @@
 package cn.l404.common.pojo;
 
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -9,6 +11,7 @@ public class ResultVO<T> implements Serializable {
     private static final long serialVersionUID = 932596772579818083L;
     private Integer code;
     private String msg;
+    @JSONField(serialzeFeatures= {SerializerFeature.WriteMapNullValue})
     private T data;
 
     public ResultVO() {

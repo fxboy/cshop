@@ -90,7 +90,6 @@ public class OAuthServiceImpl implements OAuthService {
 
     @Override
     public ResultVO getinfo(String token) {
-
         return JWTUtils.getTokenInfo(token);
     }
 
