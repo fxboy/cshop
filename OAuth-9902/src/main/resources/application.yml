@@ -30,6 +30,8 @@ qq:
   clientId: 101920186
   clientSecret: 26be4e50a86112a59d9d870c38fe8cb1
   redirectUri: http://www.fanxing.live/login/qq
+fx:
+  redirectUri: http://www.fanxing.live/login/callback
 roles:
   name: admin
 token:

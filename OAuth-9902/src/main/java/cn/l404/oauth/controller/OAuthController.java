@@ -1,5 +1,6 @@
 package cn.l404.oauth.controller;
 
+import cn.l404.oauth.annotation.HasRoleMapping;
 import cn.l404.oauth.annotation.Renewal;
 import cn.l404.oauth.service.OAuthService;
 import cn.l404.oauth.util.RequstUtils;
@@ -32,23 +33,29 @@ public class OAuthController {
   }
 
   @RequestMapping("/qq")
-  public String getInfo(AuthCallback callback) {
-    return JSON.toJSONString(oAuthService.getInfo(callback));
+  public void getInfo(AuthCallback callback,HttpServletResponse response) throws IOException {
+    response.sendRedirect(oAuthService.getInfo(callback).toString());
   }
 
   @Renewal
-  @RequestMapping("/verification")
+  @RequestMapping( value = "/verification")
   public String verification(String role) {
     return JSON.toJSONString(oAuthService.verification(requstUtils.getToken(), role));
   }
 
   @RequestMapping("/login")
-  public String login(String username,String password){
+  public String login(String username,String password) throws Exception {
     return  JSON.toJSONString(oAuthService.login(username, password));
   }
 
+  @Renewal
   @RequestMapping("/getinfo")
   public String getinfo(){
     return JSON.toJSONString(oAuthService.getinfo(requstUtils.getToken()));
+  }
+
+  @RequestMapping("/callback")
+  public String callback(AuthCallback authCallback) throws Exception {
+    return oAuthService.callback(authCallback);
   }
 }

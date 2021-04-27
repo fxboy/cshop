@@ -18,7 +18,7 @@ public interface AdminService {
     ResultVO getRoleList(String access_token);
 
     // 获取当前登录后台用户的菜单（除了不是前台用户的qq权限，其他都可以）
-    ResultVO getMenu(String access_token);
+    ResultVO getMenu(String access_token) throws Exception;
 
     // 修改指定后台用户的密码（需要id为1的权限）,可以做为重置密码
     ResultVO updateUserPassword(String access_token,Integer uid,String oldpassWord,String newPassword);

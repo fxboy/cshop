@@ -6,7 +6,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.Data;
 
 import java.io.Serializable;
-
+@Data
 public class ResultVO<T> implements Serializable {
     private static final long serialVersionUID = 932596772579818083L;
     private Integer code;

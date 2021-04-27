@@ -1,6 +1,7 @@
 package cn.l404.oauth.controller;
 
 import cn.l404.common.pojo.ResultVO;
+import cn.l404.oauth.annotation.HasRoleMapping;
 import cn.l404.oauth.annotation.Renewal;
 import cn.l404.oauth.entity.SysMenu;
 import cn.l404.oauth.entity.SysRm;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @auther Fanxing
  * 管理员操作
+ * @Renewal 本类下操作全部执行续签操作
  */
-@Renewal
+
+
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
@@ -25,67 +28,74 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-    // 添加新的用户（id为1的权限）
-    @RequestMapping("/addNewUser")
+    @Renewal
+    @HasRoleMapping(value = "/addNewUser",role = "admin")
     public ResultVO addNewUser(SysUser sysUser){
         return adminService.addNewUser(requstUtils.getToken(),sysUser);
     }
 
-    //获取权限列表，需要最终管理员（id为1的权限名称）
-    @RequestMapping("/getRoleList")
+    @Renewal
+    @HasRoleMapping(value = "/getRoleList",role = "admin")
     public ResultVO getRoleList(){
         return adminService.getRoleList(requstUtils.getToken());
     }
 
-    // 获取当前登录后台用户的菜单（除了不是前台用户的qq权限，其他都可以）
-    @RequestMapping("/getMenu")
-    public ResultVO getMenu(){
+    @Renewal
+    @HasRoleMapping(value = "/getMenu",role = "qq",allow = false)
+    public ResultVO getMenu() throws Exception {
         return adminService.getMenu(requstUtils.getToken());
     }
 
-    // 修改指定后台用户的密码（需要id为1的权限）
-    @RequestMapping("/updateUserPassword")
-    public ResultVO updateUserPassword(Integer uid,String oldpassWord,String newPassword){
-        return adminService.updateUserPassword(requstUtils.getToken(),uid,oldpassWord,newPassword);
+    @Renewal
+    @HasRoleMapping(value = "/updateUserPassword",role = "admin")
+    public ResultVO updateUserPassword(Integer uid,String oldPassWord,String newPassWord){
+        return adminService.updateUserPassword(requstUtils.getToken(),uid,oldPassWord,newPassWord);
     }
-    // 添加新的权限 （需要id为1的权限）
-    @RequestMapping("/addNewRole")
+
+    @Renewal
+    @HasRoleMapping(value = "/addNewRole",role = "admin")
     public ResultVO addNewRole(SysRole sysRole) throws Exception {
         return adminService.addNewRole(requstUtils.getToken(),sysRole);
     }
-    // 添加新菜单 (需要id为1的权限)
-    @RequestMapping("/addNewMenu")
+
+    @Renewal
+    @HasRoleMapping(value = "/addNewMenu",role = "admin")
     public ResultVO addNewMenu(SysMenu sysMenu) throws Exception {
         return adminService.addNewMenu(requstUtils.getToken(),sysMenu);
     }
 
-    @RequestMapping("/updateUserInfo")
-    // 修改后台用户的信息（需要id为1的权限）
+    @Renewal
+    @HasRoleMapping(value = "/updateUserInfo",role = "admin")
     public ResultVO updateUserInfo(SysUser sysUser) throws Exception{
         return adminService.updateUserInfo(requstUtils.getToken(),sysUser);
     }
-    @RequestMapping("/updateMyInfo")
-    // 修改我的个人信息 需要获取token中的用户id，包括我的登录密码
+
+    @Renewal
+    @HasRoleMapping(value = "/updateMyInfo",role = "qq",allow = false)
     public ResultVO updateMyInfo(SysUser sysUser) throws Exception{
         return adminService.updateMyInfo(requstUtils.getToken(),sysUser);
     }
-    @RequestMapping("/roleAddNewMenu")
-    //将menu菜单添加给某个权限
+
+    @Renewal
+    @HasRoleMapping(value = "/roleAddNewMenu",role = "admin")
     public ResultVO roleAddNewMenu(SysRm sysRm) throws Exception{
         return adminService.roleAddNewMenu(requstUtils.getToken(),sysRm);
     }
-    @RequestMapping("/updateRoleInfo")
-    // 修改权限信息
+
+    @Renewal
+    @HasRoleMapping(value = "/updateRoleInfo",role = "admin")
     public ResultVO updateRoleInfo(SysRole sysRole) throws Exception{
         return adminService.updateRoleInfo(requstUtils.getToken(), sysRole);
     }
-    @RequestMapping("/updateMenuInfo")
-    // 修改菜单信息
+
+    @Renewal
+    @HasRoleMapping(value = "/updateMenuInfo",role = "admin")
     public ResultVO updateMenuInfo(SysMenu sysMenu) throws Exception{
         return adminService.updateMenuInfo(requstUtils.getToken(), sysMenu);
     }
-    @RequestMapping("/deleteRmInfo")
-    //删除一个权限菜单映射
+
+    @Renewal
+    @HasRoleMapping(value = "/deleteRmInfo",role = "admin")
     public ResultVO deleteRmInfo(SysRm sysRm) throws Exception{
         return adminService.deleteRmInfo(requstUtils.getToken(),sysRm);
     }

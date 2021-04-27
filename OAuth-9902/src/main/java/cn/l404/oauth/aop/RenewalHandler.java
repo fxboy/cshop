@@ -11,6 +11,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
@@ -29,13 +30,13 @@ public class RenewalHandler {
     RedisUtils redisUtils;
     @Autowired
     JWTUtils jwtUtils;
-    @After("@annotation(cn.l404.oauth.annotation.Renewal)")
+    @Before("@annotation(cn.l404.oauth.annotation.Renewal)")
     public Object renewal(){
         try{
             Claims claims = jwtUtils.getClaimsFromToken(requstUtils.getToken());
             Token token1 = JSON.parseObject(claims.get("sub").toString(),Token.class);
             long ti = redisUtils.getExpire(token1.getAccessToken());
-            if(ti <= 60 * 5){
+            if(ti <= 60 * 15){
                 redisUtils.expire(token1.getAccessToken(),60 * 30);
                 System.out.println("续签成功");
             }else{

@@ -78,7 +78,7 @@ public class JWTUtils {
             Claims claims = getClaimsFromToken(token);
             String roles = claims.get("role").toString();
 
-            if(role == null){
+            if(role == null || role.equals("")){
                 return new ResultVO(2000,"ok",true);
             }
             if(roles.equals(role)){

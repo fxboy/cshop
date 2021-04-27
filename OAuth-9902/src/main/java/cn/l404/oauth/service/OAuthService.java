@@ -13,9 +13,11 @@ public interface OAuthService {
     Object getInfo(AuthCallback callback);
     ResultVO verification(String access_token,String role);
 
+    //QQ登录后可获取的信息，仅在服务器保存3分钟
+    String callback(AuthCallback callback) throws Exception;
 
     // 后台管理员登录
-    ResultVO login(String username,String password);
+    ResultVO login(String username,String password) throws Exception;
 
     ResultVO getinfo(String token);
 
