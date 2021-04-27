@@ -10,6 +10,7 @@ import cn.l404.oauth.entity.SysUser;
 import cn.l404.oauth.service.AdminService;
 import cn.l404.oauth.util.RequstUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +31,7 @@ public class AdminController {
 
     @Renewal
     @HasRoleMapping(value = "/addNewUser",role = "admin")
-    public ResultVO addNewUser(SysUser sysUser){
+    public ResultVO addNewUser(@RequestBody SysUser sysUser){
         return adminService.addNewUser(requstUtils.getToken(),sysUser);
     }
 
@@ -54,49 +55,49 @@ public class AdminController {
 
     @Renewal
     @HasRoleMapping(value = "/addNewRole",role = "admin")
-    public ResultVO addNewRole(SysRole sysRole) throws Exception {
+    public ResultVO addNewRole(@RequestBody SysRole sysRole) throws Exception {
         return adminService.addNewRole(requstUtils.getToken(),sysRole);
     }
 
     @Renewal
     @HasRoleMapping(value = "/addNewMenu",role = "admin")
-    public ResultVO addNewMenu(SysMenu sysMenu) throws Exception {
+    public ResultVO addNewMenu(@RequestBody SysMenu sysMenu) throws Exception {
         return adminService.addNewMenu(requstUtils.getToken(),sysMenu);
     }
 
     @Renewal
     @HasRoleMapping(value = "/updateUserInfo",role = "admin")
-    public ResultVO updateUserInfo(SysUser sysUser) throws Exception{
+    public ResultVO updateUserInfo(@RequestBody SysUser sysUser) throws Exception{
         return adminService.updateUserInfo(requstUtils.getToken(),sysUser);
     }
 
     @Renewal
     @HasRoleMapping(value = "/updateMyInfo",role = "qq",allow = false)
-    public ResultVO updateMyInfo(SysUser sysUser) throws Exception{
+    public ResultVO updateMyInfo(@RequestBody SysUser sysUser) throws Exception{
         return adminService.updateMyInfo(requstUtils.getToken(),sysUser);
     }
 
     @Renewal
     @HasRoleMapping(value = "/roleAddNewMenu",role = "admin")
-    public ResultVO roleAddNewMenu(SysRm sysRm) throws Exception{
+    public ResultVO roleAddNewMenu(@RequestBody SysRm sysRm) throws Exception{
         return adminService.roleAddNewMenu(requstUtils.getToken(),sysRm);
     }
 
     @Renewal
     @HasRoleMapping(value = "/updateRoleInfo",role = "admin")
-    public ResultVO updateRoleInfo(SysRole sysRole) throws Exception{
+    public ResultVO updateRoleInfo(@RequestBody SysRole sysRole) throws Exception{
         return adminService.updateRoleInfo(requstUtils.getToken(), sysRole);
     }
 
     @Renewal
     @HasRoleMapping(value = "/updateMenuInfo",role = "admin")
-    public ResultVO updateMenuInfo(SysMenu sysMenu) throws Exception{
+    public ResultVO updateMenuInfo(@RequestBody SysMenu sysMenu) throws Exception{
         return adminService.updateMenuInfo(requstUtils.getToken(), sysMenu);
     }
 
     @Renewal
     @HasRoleMapping(value = "/deleteRmInfo",role = "admin")
-    public ResultVO deleteRmInfo(SysRm sysRm) throws Exception{
+    public ResultVO deleteRmInfo(@RequestBody SysRm sysRm) throws Exception{
         return adminService.deleteRmInfo(requstUtils.getToken(),sysRm);
     }
 }

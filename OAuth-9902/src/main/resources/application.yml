@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: oauth
+  profiles:
+    include: gobal
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     name: defaultDataSource
@@ -20,20 +22,11 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 eureka:
-  instance:
-    hostname: localhost  # 注册中心路径
-    port: 9901
   client:
-    service-url:
-      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka
-qq:
-  clientId: 101920186
-  clientSecret: 26be4e50a86112a59d9d870c38fe8cb1
-  redirectUri: http://www.fanxing.live/login/qq
-fx:
-  redirectUri: http://www.fanxing.live/login/callback
-roles:
-  name: admin
-token:
-  name: access_token
+    serviceUrl:
+      defaultZone: http://localhost:${fx.eureka.port}/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+
 

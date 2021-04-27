@@ -1,0 +1,22 @@
+server:
+  port: 9903
+#服务名称
+spring:
+  application:
+    name: shoppingcart
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    timeout: 1000
+  profiles:
+    include: gobal
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:${fx.eureka.port}/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+

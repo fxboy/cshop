@@ -3,6 +3,7 @@ package cn.l404.oauth.util;
 import cn.l404.common.pojo.ResultVO;
 import cn.l404.common.pojo.Token;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -79,10 +80,10 @@ public class JWTUtils {
             String roles = claims.get("role").toString();
 
             if(role == null || role.equals("")){
-                return new ResultVO(2000,"ok",true);
+                return new ResultVO(2000,"ok", JSONObject.parseObject(claims.get("sub").toString()).getString("openId"));
             }
             if(roles.equals(role)){
-                return new ResultVO(2000,"ok",true);
+                return new ResultVO(2000,"ok",JSONObject.parseObject(claims.get("sub").toString()).getString("openId"));
             }
             return new ResultVO(403,"no permission ",false);
         }

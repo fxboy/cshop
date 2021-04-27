@@ -12,6 +12,7 @@
         <module>Eureka-9901</module>
         <module>OAuth-9902</module>
         <module>Common</module>
+        <module>ShoppingCart-9903</module>
     </modules>
 
     <properties>

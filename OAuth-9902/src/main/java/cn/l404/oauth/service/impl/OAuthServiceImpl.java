@@ -103,6 +103,7 @@ public class OAuthServiceImpl implements OAuthService {
     @Override
     public ResultVO login(String username, String password) throws Exception {
         password = PasswordUtils.encypt(password);
+        System.out.println("登录的密码："+password);
         SysUser sysUser= sysUserDao.login(username, password);
         if(sysUser == null){
             throw new Exception("请检查用户的账号密码是否错误");
