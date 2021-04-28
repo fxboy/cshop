@@ -1,0 +1,35 @@
+{
+  "name" : "SysRm",
+  "originTableName" : "sys_rm",
+  "comment" : null,
+  "fullColumn" : [ {
+    "name" : "rmId",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "ktShortType" : "Int",
+    "custom" : false,
+    "ext" : { }
+  }, {
+    "name" : "roleId",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "ktShortType" : "Int",
+    "custom" : false,
+    "ext" : { }
+  }, {
+    "name" : "menuId",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "ktShortType" : "Int",
+    "custom" : false,
+    "ext" : { }
+  } ],
+  "pkColumn" : null,
+  "otherColumn" : null,
+  "savePackageName" : "cn.l404.oauth",
+  "savePath" : "./Common/src/main/java/cn/l404/oauth",
+  "saveModelName" : "Common"
+}

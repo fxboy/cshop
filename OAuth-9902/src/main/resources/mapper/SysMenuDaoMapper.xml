@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.l404.oauth.dao.SysMenuDao">
+
+    <resultMap id="BaseResultMap" type="cn.l404.oauth.entity.SysMenu">
+        <!--@Table sys_menu-->
+        <result property="menuId" column="menu_id" jdbcType="INTEGER"/>
+        <result property="menuName" column="menu_name" jdbcType="VARCHAR"/>
+        <result property="menuIcon" column="menu_icon" jdbcType="VARCHAR"/>
+        <result property="menuUrl" column="menu_url" jdbcType="VARCHAR"/>
+        <result property="menuTop" column="menu_top" javaType="INTEGER" />
+        <result property="menuStatus" column="menu_status" jdbcType="INTEGER"/>
+        <collection property="sysMenus" ofType="cn.l404.oauth.entity.SysMenu">
+            <result property="menuId" column="menu_id_1" jdbcType="INTEGER"/>
+            <result property="menuName" column="menu_name_1" jdbcType="VARCHAR"/>
+            <result property="menuIcon" column="menu_icon_1" jdbcType="VARCHAR"/>
+            <result property="menuUrl" column="menu_url_1" jdbcType="VARCHAR"/>
+            <result property="menuTop" column="menu_top_1" javaType="INTEGER" />
+            <result property="menuStatus" column="menu_status_1" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectMenuByRoles" resultMap="BaseResultMap">
+        SELECT
+                sm.menu_id,sm.menu_name,sm.menu_top,sm.menu_icon, sm.menu_url, sm.menu_status,
+                sm1.menu_id menu_id_1,sm1.menu_name menu_name_1,sm1.menu_top menu_top_1,sm1.menu_icon menu_icon_1, sm1.menu_url menu_url_1, sm1.menu_status menu_status_1
+        FROM `sys_rm` rm
+                     left join sys_role sr on rm.role_id = sr.role_id
+                     left join sys_menu sm on sm.menu_id = rm.menu_id
+                     left join sys_menu sm1 on sm1.menu_top = sm.menu_id
+        WHERE
+            sr.role_id = #{roleId} and sm.menu_top = 0
+    </select>
+    <!--查询单个-->
+    <select id="findById" resultMap="BaseResultMap">
+        select menu_id, menu_name,menu_top,menu_icon, menu_url, menu_status  from sys_menu
+        where menu_id = #{menuId}
+    </select>
+
+    <!--查询所有数据-->
+    <select id="list" resultMap="BaseResultMap">
+        select   menu_id, menu_name, menu_top,menu_icon, menu_url, menu_status  from sys_menu
+    </select>
+    
+     <!--查询所有数据-->
+    <select id="listAll" resultMap="BaseResultMap">
+        select menu_id, menu_name,menu_top, menu_icon, menu_url, menu_status  from sys_menu
+           <where>
+                    menu_id like  '%${keyword}%'
+                               or
+                menu_name like  '%${keyword}%'
+                               or
+                menu_icon like  '%${keyword}%'
+                               or
+                menu_url like  '%${keyword}%'
+                               or
+                menu_status like  '%${keyword}%'
+            </where>
+     order by  menuId desc
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select  menu_id, menu_name,menu_top, menu_icon, menu_url, menu_status  from sys_menu
+        <where>
+            <if test="menuId != null">
+                and menu_id = #{menuId}
+            </if>
+            <if test="menuName != null and menuName != ''">
+                and menu_name = #{menuName}
+            </if>
+            <if test="menuIcon != null and menuIcon != ''">
+                and menu_icon = #{menuIcon}
+            </if>
+            <if test="menuUrl != null and menuUrl != ''">
+                and menu_url = #{menuUrl}
+            </if>
+            <if test="menuStatus != null">
+                and menu_status = #{menuStatus}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="save" keyProperty="menuId" useGeneratedKeys="true">
+        insert into wxshop.sys_menu(menu_name,menu_top, menu_icon, menu_url, menu_status)
+        values (#{menuName},#{menuTop}, #{menuIcon}, #{menuUrl},1)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update wxshop.sys_menu
+        <set>
+            <if test="menuName != null and menuName != ''">
+                menu_name = #{menuName},
+            </if>
+            <if test="menuTop != null and menuTop != ''" >
+                menu_top = #{menuTop}
+            </if>
+            <if test="menuIcon != null and menuIcon != ''">
+                menu_icon = #{menuIcon},
+            </if>
+            <if test="menuUrl != null and menuUrl != ''">
+                menu_url = #{menuUrl},
+            </if>
+            <if test="menuStatus != null">
+                menu_status = #{menuStatus},
+            </if>
+        </set>
+        where menu_id = #{menuId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from wxshop.sys_menu where menu_id = #{menuId}
+    </delete>
+
+</mapper>

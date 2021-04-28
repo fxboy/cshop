@@ -12,3 +12,6 @@ roles:
   name: admin
 token:
   name: access_token
+pay:
+  redirectUri: http://www.fanxing.live/login/callback
+

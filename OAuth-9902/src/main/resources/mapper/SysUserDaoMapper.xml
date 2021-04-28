@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.l404.oauth.dao.SysUserDao">
+
+    <resultMap id="BaseResultMap" type="cn.l404.oauth.entity.SysUser">
+        <!--@Table sys_user-->
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="userUsername" column="user_username" jdbcType="VARCHAR"/>
+        <result property="userPassword" column="user_password" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="userPhone" column="user_phone" jdbcType="VARCHAR"/>
+        <result property="userRole" column="user_role" jdbcType="INTEGER"/>
+        <result property="userAvatar" column="user_avatar" jdbcType="VARCHAR"/>
+        <result property="userCreate" column="user_create" jdbcType="TIMESTAMP"/>
+        <result property="userUpdate" column="user_update" jdbcType="TIMESTAMP"/>
+        <result property="userStatus" column="user_status" jdbcType="VARCHAR"/>
+        <result property="userValidity" column="user_validity" jdbcType="TIMESTAMP"/>
+        <association property="sysRole" javaType="cn.l404.oauth.entity.SysRole">
+            <result property="roleId" column="role_id" jdbcType="INTEGER"/>
+            <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
+            <result property="roleStatus" column="role_status" jdbcType="INTEGER"/>
+        </association>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="findById" resultMap="BaseResultMap">
+        select user_id, user_username,  user_name, user_phone, user_role, user_avatar, user_create, user_update, user_status, user_validity,role_id, role_name, role_status  from sys_user su LEFT JOIN sys_role sr on sr.role_id = su.user_role
+        where user_id = #{userId}
+    </select>
+
+    <!--查询所有数据-->
+    <select id="list" resultMap="BaseResultMap">
+        select user_id, user_username, user_name, user_phone, user_role, user_avatar, user_create, user_update, user_status, user_validity,role_id, role_name, role_status  from sys_user su LEFT JOIN sys_role sr on sr.role_id = su.user_role
+    </select>
+    
+     <!--查询所有数据-->
+    <select id="listAll" resultMap="BaseResultMap">
+        select user_id, user_username, user_name, user_phone, user_role, user_avatar, user_create, user_update, user_status, user_validity,role_id, role_name, role_status  from sys_user su LEFT JOIN sys_role sr on sr.role_id = su.user_role
+        <where>
+                    user_id like  '%${keyword}%'
+                               or
+                user_username like  '%${keyword}%'
+                               or
+                user_password like  '%${keyword}%'
+                               or
+                user_name like  '%${keyword}%'
+                               or
+                user_phone like  '%${keyword}%'
+                               or
+                user_role like  '%${keyword}%'
+                               or
+                user_avatar like  '%${keyword}%'
+                               or
+                user_create like  '%${keyword}%'
+                               or
+                user_update like  '%${keyword}%'
+                               or
+                user_status like  '%${keyword}%'
+                               or
+                user_validity like  '%${keyword}%'
+            </where>
+     order by  userId desc
+    </select>
+
+    <select id="login" resultMap="BaseResultMap">
+        select user_id, user_username, user_name, user_phone, user_role, user_avatar, user_create, user_update, user_status, user_validity,role_id, role_name, role_status  from sys_user su LEFT JOIN sys_role sr on sr.role_id = su.user_role
+       where user_username = #{username} and user_password = #{password}
+        and user_status = 1
+    </select>
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select user_id, user_username, user_name, user_phone, user_role, user_avatar, user_create, user_update, user_status, user_validity,role_id, role_name, role_status  from sys_user su LEFT JOIN sys_role sr on sr.role_id = su.user_role
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="userUsername != null and userUsername != ''">
+                and user_username = #{userUsername}
+            </if>
+            <if test="userPassword != null and userPassword != ''">
+                and user_password = #{userPassword}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="userPhone != null and userPhone != ''">
+                and user_phone = #{userPhone}
+            </if>
+            <if test="userRole != null">
+                and user_role = #{userRole}
+            </if>
+            <if test="userAvatar != null and userAvatar != ''">
+                and user_avatar = #{userAvatar}
+            </if>
+            <if test="userCreate != null">
+                and user_create = #{userCreate}
+            </if>
+            <if test="userUpdate != null">
+                and user_update = #{userUpdate}
+            </if>
+            <if test="userStatus != null and userStatus != ''">
+                and user_status = #{userStatus}
+            </if>
+            <if test="userValidity != null">
+                and user_validity = #{userValidity}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="save" keyProperty="userId" useGeneratedKeys="true">
+        insert into wxshop.sys_user(user_username, user_password, user_name, user_phone, user_role, user_avatar, user_create, user_update, user_status, user_validity)
+        values (#{userUsername}, #{userPassword}, #{userName}, #{userPhone}, #{userRole}, #{userAvatar}, NOW(),NOW(), 1, #{userValidity})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update wxshop.sys_user
+        <set>
+            <if test="userUsername != null and userUsername != ''">
+                user_username = #{userUsername},
+            </if>
+            <if test="userPassword != null and userPassword != ''">
+                user_password = #{userPassword},
+            </if>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="userPhone != null and userPhone != ''">
+                user_phone = #{userPhone},
+            </if>
+            <if test="userRole != null">
+                user_role = #{userRole},
+            </if>
+            <if test="userAvatar != null and userAvatar != ''">
+                user_avatar = #{userAvatar},
+            </if>
+            <if test="userCreate != null">
+                user_create = #{userCreate},
+            </if>
+
+            <if test="userStatus != null and userStatus != ''">
+                user_status = #{userStatus},
+            </if>
+            <if test="userValidity != null">
+                user_validity = #{userValidity},
+            </if>
+            <if test="1 == 1">
+                user_update = NOW(),
+            </if>
+        </set>
+        where user_id = #{userId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from wxshop.sys_user where user_id = #{userId}
+    </delete>
+
+
+</mapper>

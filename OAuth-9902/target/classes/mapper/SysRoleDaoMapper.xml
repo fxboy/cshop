@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.l404.oauth.dao.SysRoleDao">
+
+    <resultMap id="BaseResultMap" type="cn.l404.oauth.entity.SysRole">
+        <!--@Table sys_role-->
+        <result property="roleId" column="role_id" jdbcType="INTEGER"/>
+        <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
+        <result property="roleStatus" column="role_status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="findById" resultMap="BaseResultMap">
+        select role_id, role_name, role_status  from sys_role
+        where role_id = #{roleId}
+    </select>
+
+    <!--查询所有数据-->
+    <select id="list" resultMap="BaseResultMap">
+        select   role_id, role_name, role_status  from sys_role
+    </select>
+    
+     <!--查询所有数据-->
+    <select id="listAll" resultMap="BaseResultMap">
+        select role_id, role_name, role_status  from sys_role
+           <where>
+                    role_id like  '%${keyword}%'
+                               or
+                role_name like  '%${keyword}%'
+                               or
+                role_status like  '%${keyword}%'
+            </where>
+     order by  roleId desc
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select  role_id, role_name, role_status  from sys_role
+        <where>
+            <if test="roleId != null">
+                and role_id = #{roleId}
+            </if>
+            <if test="roleName != null and roleName != ''">
+                and role_name = #{roleName}
+            </if>
+            <if test="roleStatus != null">
+                and role_status = #{roleStatus}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="save" keyProperty="roleId" useGeneratedKeys="true">
+        insert into wxshop.sys_role(role_name, role_status)
+        values (#{roleName}, 1)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update wxshop.sys_role
+        <set>
+            <if test="roleName != null and roleName != ''">
+                role_name = #{roleName},
+            </if>
+            <if test="roleStatus != null">
+                role_status = #{roleStatus},
+            </if>
+        </set>
+        where role_id = #{roleId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from wxshop.sys_role where role_id = #{roleId}
+    </delete>
+
+</mapper>
